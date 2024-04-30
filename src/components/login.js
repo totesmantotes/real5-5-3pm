@@ -1,29 +1,22 @@
+// Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setIsLogged, setUsername }) => {
+const Login = ({ setAccount }) => {
   const [loginUsername, setLoginUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-
-  // NAVIGATION
   const navigate = useNavigate();
-
-  const dummyUserObject = {
-    username: "Kolosafo",
-    password: "12345",
-  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (
-      loginUsername === dummyUserObject.username &&
-      password === dummyUserObject.password
-    ) {
-      setUsername(loginUsername);
-      setIsLogged(true);
-      navigate("/authProfile"); // Navigate to the authenticated profile page
+    // Check if the login credentials are correct
+    if (loginUsername === "Kolosafo" && password === "12345") {
+      // If correct, set the account and navigate to the home page
+      setAccount(loginUsername);
+      navigate("/authProfile");
     } else {
+      // If incorrect, display an error message
       setErrorMsg("Invalid Credentials");
     }
   };
@@ -38,10 +31,7 @@ const Login = ({ setIsLogged, setUsername }) => {
         type="text"
         name="username"
         value={loginUsername}
-        onChange={(e) => {
-          setLoginUsername(e.target.value);
-          setErrorMsg("");
-        }}
+        onChange={(e) => setLoginUsername(e.target.value)}
         className="login-inp"
         placeholder="username"
       />
@@ -53,10 +43,7 @@ const Login = ({ setIsLogged, setUsername }) => {
         name="password"
         value={password}
         className="login-inp"
-        onChange={(e) => {
-          setPassword(e.target.value);
-          setErrorMsg("");
-        }}
+        onChange={(e) => setPassword(e.target.value)}
         placeholder="password"
       />
       <button type="submit">Submit</button>

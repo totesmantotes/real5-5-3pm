@@ -1,13 +1,10 @@
 import React, { useState, Suspense } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { appRoutes } from "./routes";
-import Navigation from "./components/Navigation"; // Import the Navigation component
+import Navigation from "./components/Navigation";
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [isLogged, setIsLogged] = useState(false);
-  const [account, setAccount] = useState(null); // Add state for account
-
+  const [account, setAccount] = useState(null);
   const location = useLocation();
 
   return (
@@ -15,30 +12,25 @@ function App() {
       <Routes location={location}>
         {appRoutes.map((route) => (
           <Route
-          key={route.path}
-          exact
-          path={route.path}
-          element={
-            route.requiresAuth && !isLogged ? (
-              <Navigate replace to={"/login"} />
-            ) : (
-              <route.component
-                {...{
-                  setIsLogged,
-                  setUsername,
-                  username,
-                  setAccount,
-                }}
-              />
-            )
-          }
-        />
-        
-        
+            key={route.path}
+            exact
+            path={route.path}
+            element={
+              route.requiresAuth && !account ? (
+                <Navigate replace to={"/login"} />
+              ) : (
+                <route.component
+                  {...{
+                    account,
+                    setAccount,
+                  }}
+                />
+              )
+            }
+          />
         ))}
-        {/* Add routes from appRoutes */}
       </Routes>
-      <Navigation account={account} setAccount={setAccount} /> {/* Pass account and setAccount to Navigation */}
+      <Navigation account={account} setAccount={setAccount} />
     </Suspense>
   );
 }

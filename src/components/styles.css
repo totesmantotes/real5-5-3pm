@@ -1,0 +1,178 @@
+/* styles.css */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+  position: relative; /* Ensure positioning context */
+}
+
+.nav__brand h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav__link,
+.nav__button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+}
+
+.nav__link:hover,
+.nav__button:hover {
+  background-color: #45a049; /* Darker green */
+}
+
+.nav__button:disabled {
+  background-color: #999; /* Grey */
+  cursor: not-allowed;
+}
+
+.link-cont {
+  position: relative; /* Add position relative */
+  z-index: 1; /* Add z-index */
+}
+
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-inp {
+  padding: 10px;
+  border-radius: 10px;
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+nav {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-nav {
+  margin-left: 50px;
+  margin-right: auto;
+}
+
+.link-cont {
+  margin-right: 50px;
+  width: 20%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.users-cont {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.repo-desc {
+  font-size: 10px;
+}
+.username {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.repo-lang-span {
+  color: orangered;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.name-cont {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.repo-owner {
+  color: lightpink;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.avatar-img {
+  width: 50%;
+}
+
+.clone-url-inp {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-right: 5px;
+}
+
+.view-ongit-a {
+  margin-bottom: 10px;
+}
+
+/* ///// */
+
+.user-card-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.user-avatar {
+  width: 70%;
+}
+.username {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+@media only screen and (max-width: 768px) {
+  .user-card-cont {
+    width: 100%;
+  }
+}
+
+/* ///// */
+
+.top-cont {
+  display: flex;
+}
+
+.user-avatar-img {
+  width: 30%;
+}
+.name-cont {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bottom-cont {
+  flex: 1;
+  border-top: 1px solid lightgray;
+  margin-top: 10px;
+}
+
+.follow-cont {
+  white-space: nowrap;
+}
+.followers {
+  margin-right: 10px;
+  margin-left: 20px;
+}

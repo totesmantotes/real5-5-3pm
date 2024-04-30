@@ -15,22 +15,26 @@ function App() {
       <Routes location={location}>
         {appRoutes.map((route) => (
           <Route
-            key={route.path}
-            exact
-            path={route.path}
-            element={
-              route.requiresAuth && !isLogged ? (
-                <Navigate replace to={"/login"} />
-              ) : (
-                <route.component
-                  setIsLogged={setIsLogged}
-                  setUsername={setUsername}
-                  username={username}
-                  setAccount={setAccount} // Pass setAccount to the component
-                />
-              )
-            }
-          />
+          key={route.path}
+          exact
+          path={route.path}
+          element={
+            route.requiresAuth && !isLogged ? (
+              <Navigate replace to={"/login"} />
+            ) : (
+              <route.component
+                {...{
+                  setIsLogged,
+                  setUsername,
+                  username,
+                  setAccount,
+                }}
+              />
+            )
+          }
+        />
+        
+        
         ))}
         {/* Add routes from appRoutes */}
       </Routes>

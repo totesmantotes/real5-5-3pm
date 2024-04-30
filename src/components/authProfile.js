@@ -6,15 +6,20 @@ const AuthProfile = ({ username }) => {
 
   useEffect(() => {
     const getGitUser = async () => {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}`
-      );
-      console.log("USER IS HERE", response.data);
-      setGitUserData(response.data);
-      return response.data;
+      try {
+        const response = await axios.get(
+          `https://api.github.com/users/${username}`
+        );
+        console.log("USER IS HERE", response.data);
+        setGitUserData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     };
-    getGitUser().catch((e) => console.error(e));
-  }, []);
+
+    getGitUser();
+  }, [username]); // Added dependency to useEffect
+
   return (
     <div className="user-profile-main-cont">
       <h2 style={{ marginTop: "40px", marginBottom: "20px" }}>YOUR PROFILE</h2>
@@ -23,7 +28,7 @@ const AuthProfile = ({ username }) => {
           src={gitUserData.avatar_url}
           className="user-avatar-img"
           alt="user-img"
-        />{" "}
+        />
         <div className="name-cont">
           <span>{gitUserData.login}</span>
           <h2>{gitUserData.name}</h2>

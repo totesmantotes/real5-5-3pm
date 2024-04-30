@@ -37,12 +37,11 @@ const Messages = ({ account, messages, currentChannel }) => {
 
   useEffect(() => {
     scrollHandler()
-  })
+  }, [messages, currentChannel]) // Add dependencies to useEffect
 
   return (
     <div className="text">
       <div className="messages">
-
         {currentChannel && messages.filter(message => message.channel === currentChannel.id.toString()).map((message, index) => (
           <div className="message" key={index}>
             <img src={person} alt="Person" />
@@ -54,19 +53,16 @@ const Messages = ({ account, messages, currentChannel }) => {
             </div>
           </div>
         ))}
-
         <div ref={messageEndRef} />
-
       </div>
 
       <form onSubmit={sendMessage}>
         {currentChannel && account ? (
           <input type="text" value={message} placeholder={`Message #${currentChannel.name}`} onChange={(e) => setMessage(e.target.value)} />
         ) : (
-          <input type="text" value="" placeholder={`Please Connect Wallet / Join the Channel`} disabled />
+          <input type="text" value={message} placeholder={`Please Connect Wallet / Join the Channel`} disabled={true} />
         )}
-
-        <button type="submit">
+        <button type="submit" disabled={!currentChannel || !account}>
           <img src={send} alt="Send Message" />
         </button>
       </form>

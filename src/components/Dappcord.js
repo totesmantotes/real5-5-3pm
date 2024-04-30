@@ -1,4 +1,3 @@
-// DappcordApp.js
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import Navigation from './Navigation';
@@ -8,12 +7,12 @@ import Messages from './Messages';
 import { io } from "socket.io-client";
 
 // ABIs
-import Dappcord from '../abis/Dappcord.json';
+import DappcordABI from '../abis/Dappcord.json'; // Renamed to avoid confusion with component
 
 // Config
 import config from '../config.json';
 
-function DappcordApp({ account, setAccount }) {
+function Dappcord({ account, setAccount }) {
   const [provider, setProvider] = useState(null);
   const [dappcord, setDappcord] = useState(null);
   const [channels, setChannels] = useState([]);
@@ -21,26 +20,30 @@ function DappcordApp({ account, setAccount }) {
   const [messages, setMessages] = useState([]);
 
   const loadBlockchainData = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider);
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(provider);
 
-    const network = await provider.getNetwork();
-    const dappcord = new ethers.Contract(config[network.chainId].Dappcord.address, Dappcord, provider);
-    setDappcord(dappcord);
+      const network = await provider.getNetwork();
+      const dappcordContract = new ethers.Contract(config[network.chainId].Dappcord.address, DappcordABI, provider);
+      setDappcord(dappcordContract);
 
-    const totalChannels = await dappcord.totalChannels();
-    const channels = [];
+      const totalChannels = await dappcordContract.totalChannels();
+      const channels = [];
 
-    for (var i = 1; i <= totalChannels; i++) {
-      const channel = await dappcord.getChannel(i);
-      channels.push(channel);
+      for (let i = 1; i <= totalChannels; i++) {
+        const channel = await dappcordContract.getChannel(i);
+        channels.push(channel);
+      }
+
+      setChannels(channels);
+
+      window.ethereum.on('accountsChanged', async () => {
+        window.location.reload();
+      });
+    } catch (error) {
+      console.error("Error loading blockchain data:", error);
     }
-
-    setChannels(channels);
-
-    window.ethereum.on('accountsChanged', async () => {
-      window.location.reload();
-    });
   };
 
   useEffect(() => {
@@ -87,4 +90,4 @@ function DappcordApp({ account, setAccount }) {
   );
 }
 
-export default DappcordApp;
+export default Dappcord;

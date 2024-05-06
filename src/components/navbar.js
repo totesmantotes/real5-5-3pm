@@ -13,6 +13,8 @@ const Navbar = ({ isLogged }) => {
         <Link to={"/search"}>Search</Link>
         <Link to={"/authProfile"}>Profile</Link>
         <Link to={"/dappcord"}>Chat</Link>
+        <Link to={"/payment"}>Pay</Link>
+        <Link to={"/login"}>Login</Link>
         {/* Remove the following line to remove the Connect Button */}
         {/* {!isLogged && <Link to={"/login"}>Login</Link>} */}
       </div>

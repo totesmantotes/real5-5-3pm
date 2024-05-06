@@ -23,7 +23,7 @@ const AuthProfile = ({ username }) => {
 
   return (
     <div className="user-profile-main-cont">
-      <h2 className="profile-heading">YOUR PROFILE</h2>
+      <h2 className="profile-heading">Username/Account Address</h2>
       <div className="top-cont">
         {gitUserData.avatar_url && (
           <img
@@ -37,7 +37,7 @@ const AuthProfile = ({ username }) => {
           <h2 className="name">{gitUserData.name}</h2>
           <div className="user-details">
             <span className="user-detail">
-              <strong>Company:</strong>{" "}
+              <strong></strong>{" "}
               {gitUserData.company || "Not available"}
             </span>
             <span className="user-detail">
@@ -47,10 +47,10 @@ const AuthProfile = ({ username }) => {
           <h3 className="location">{gitUserData.location}</h3>
           <div className="follow-cont">
             <span className="followers">
-              <strong>Followers:</strong> {gitUserData.followers}
+              <strong></strong> {gitUserData.followers}
             </span>
             <span className="following">
-              <strong>Following:</strong> {gitUserData.following}
+              <strong></strong> {gitUserData.following}
             </span>
           </div>
           <a

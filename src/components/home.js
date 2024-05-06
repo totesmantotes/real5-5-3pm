@@ -4,54 +4,11 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 
 const RepoList = () => {
-  // State management
-  const [repos, setRepos] = useState(null);
-
-  const gitRepos = async () => {
-    const response = await axios.get(
-      "https://api.github.com/search/repositories?q=XXX"
-    );
-    console.log(response.data.items);
-    setRepos(response.data.items);
-    return response.data;
-  };
-
-  useEffect(() => {
-    gitRepos().catch((e) => console.error(e));
-  }, []);
-
   return (
-    <div className="repo-list">
-      {repos ? (
-        <div className="grid-container">
-          {repos.map((repo) => (
-            <div className="user-card-cont" key={repo.id}>
-              <img
-                src={repo.owner.avatar_url}
-                alt="userAvatar"
-                className="user-avatar"
-              />
-              <span className="username">{repo.name}</span>
-              <span className="repo-lang-span">Language: {repo.language}</span>
-              <div>
-                By:{" "}
-                <Link
-                  to={`/users/user/${repo.owner.login}`}
-                  className="repo-owner"
-                >
-                  {repo.owner.login}
-                </Link>
-              </div>
-              <Link to={`/repo-detail/${repo.name}/${repo.owner.login}`}>
-                <button>View Reputation Score</button>
-              </Link>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <h1>Loading...</h1>
-      )}
-      <Link to="/users">Go To Users Page</Link>
+    <div>
+      <h1>Welcome to Soshal Exchange!</h1>
+      <h2>This is a web-based Discorb/Venmo application <br></br> used to transfer etherum to your friends</h2>
+      <h3>Please use one of the above links to navigate our site</h3>
     </div>
   );
 };

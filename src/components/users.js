@@ -3,23 +3,37 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Users = () => {
-  //State management
+  // State management
   const [gitUsers, setGitUsers] = useState([]);
   const navigate = useNavigate();
 
+  // Array of GitHub usernames for your friends
+  const friendUsernames = ["totesmantotes", "antonioddrivera", "neelraj2001", "DeadW8t"];
+
   const getGitUsers = async () => {
-    const response = await axios.get("https://api.github.com/users?since=XXXX");
-    console.log(response.data);
-    setGitUsers(response.data);
-    return response.data;
+    // Fetch details for each friend user
+    const promises = friendUsernames.map(username =>
+      axios.get(`https://api.github.com/users/${username}`)
+    );
+
+    // Wait for all requests to complete
+    const responses = await Promise.all(promises);
+    
+    // Extract data from each response
+    const friendUserData = responses.map(response => response.data);
+
+    // Update state with friend user data
+    setGitUsers(friendUserData);
+
+    return friendUserData;
   };
 
   useEffect(() => {
     getGitUsers().catch((e) => console.error(e));
   }, []);
+
   return (
     <div style={{ marginTop: "50px" }}>
-      {" "}
       <div className="users-cont">
         {gitUsers.map((user) => (
           <div className="user-card-cont" key={user.id}>

@@ -1,8 +1,7 @@
-// Payment.js
 import React, { useState } from "react";
 import { ethers } from "ethers";
 
-const startPayment = async ({ setError, setTxs, ether, addr }) => {
+const startPayment = async ({ setError, setTxs, ether, addr, setRatings, ratings, account, rating, txs }) => {
   try {
     if (!window.ethereum)
       throw new Error("No crypto wallet found. Please install it.");
@@ -17,26 +16,38 @@ const startPayment = async ({ setError, setTxs, ether, addr }) => {
     });
     console.log({ ether, addr });
     console.log("tx", tx);
-    setTxs([tx]);
+    setTxs([tx, ...txs]); // Define txs here
+    setRatings({ ...ratings, [tx.hash]: rating }); // Set rating for this transaction
   } catch (err) {
     setError(err.message);
   }
 };
 
-export default function Payment() {
+export default function Payment({ account }) {
   const [error, setError] = useState();
-  const [txs, setTxs] = useState([]);
+  const [txs, setTxs] = useState([]); // Define txs state variable here
+  const [ratings, setRatings] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     setError();
+    const rating = 0; // Initialize rating
     await startPayment({
       setError,
       setTxs,
       ether: data.get("ether"),
       addr: data.get("addr"),
+      setRatings,
+      ratings, // Pass ratings state variable
+      account,
+      rating,
+      txs, // Pass txs state variable
     });
+  };
+
+  const handleRatingChange = (txHash, rating) => {
+    setRatings({ ...ratings, [txHash]: rating });
   };
 
   return (
@@ -73,7 +84,7 @@ export default function Payment() {
             Pay now
           </button>
           <ErrorMessage message={error} />
-          <TxList txs={txs} />
+          <TxList txs={txs} ratings={ratings} onRatingChange={handleRatingChange} />
         </footer>
       </div>
     </form>
@@ -105,15 +116,27 @@ function ErrorMessage({ message }) {
   );
 }
 
-function TxList({ txs }) {
+function TxList({ txs, ratings, onRatingChange }) {
   if (txs.length === 0) return null;
 
   return (
     <>
-      {txs.map((item) => (
-        <div key={item} className="alert alert-info mt-5">
+      {txs.map((tx) => (
+        <div key={tx.hash} className="alert alert-info mt-5">
           <div className="flex-1">
-            <label>{item.hash}</label>
+            <div>Transaction Hash: {tx.hash}</div>
+            <div>
+              Rating: 
+              {[...Array(5)].map((_, i) => (
+                <span
+                  key={i}
+                  onClick={() => onRatingChange(tx.hash, i + 1)}
+                  style={{ cursor: 'pointer', color: i < (ratings[tx.hash] || 0) ? 'gold' : 'gray' }}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       ))}

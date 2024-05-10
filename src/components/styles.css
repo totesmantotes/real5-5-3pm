@@ -6,7 +6,7 @@
   height: 100vh;
   width: 250px;
   background-color: #333;
-  color: white;
+  color: rgb(151, 99, 99);
   padding: 20px;
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
 }
@@ -25,7 +25,7 @@
 .nav__button {
   background-color: #4caf50;
   border: none;
-  color: white;
+  color: rgb(114, 207, 106);
   padding: 10px 20px;
   margin-bottom: 10px;
   text-align: center;
@@ -45,7 +45,7 @@
 .menu-toggle .bar {
   width: 25px;
   height: 3px;
-  background-color: white;
+  background-color: rgb(112, 80, 80);
   margin: 5px 0;
 }
 
@@ -65,7 +65,7 @@
   display: block;
   padding: 10px 0;
   font-size: 1.2rem;
-  color: white;
+  color: rgb(178, 78, 78);
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
@@ -85,7 +85,7 @@
 }
 
 .user-card-cont {
-  background-color: #f0f0f0;
+  background-color: #6192dd;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -99,6 +99,7 @@
 .username {
   font-size: 20px;
   font-weight: bold;
+  color: #333; /* Changed to black */
 }
 
 .repo-lang-span {
@@ -114,7 +115,7 @@ button {
   margin-top: 10px;
   padding: 8px 16px;
   background-color: #007bff;
-  color: white;
+  color: rgb(105, 205, 124);
   border: none;
   border-radius: 5px;
   cursor: pointer;

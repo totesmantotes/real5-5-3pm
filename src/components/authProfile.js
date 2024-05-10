@@ -4,6 +4,9 @@ import "./AuthProfile.css"; // Import custom CSS for styling
 
 const AuthProfile = ({ username }) => {
   const [gitUserData, setGitUserData] = useState({});
+  const [walletHash, setWalletHash] = useState("");
+  const [totalRating, setTotalRating] = useState(0);
+  const [walletHashes, setWalletHashes] = useState([]);
 
   useEffect(() => {
     const getGitUser = async () => {
@@ -21,9 +24,29 @@ const AuthProfile = ({ username }) => {
     getGitUser();
   }, [username]); // Dependency added to useEffect to fetch data when username changes
 
+  useEffect(() => {
+    // Calculate total rating from transaction ratings
+    const transactionRatings = [1, 2, 3, 4, 5]; // Example transaction ratings
+    const sum = transactionRatings.reduce((acc, rating) => acc + rating, 0);
+    setTotalRating(sum);
+  }, []); // This effect runs once to calculate the total rating
+
+  // Function to handle wallet hash input change
+  const handleWalletHashChange = (event) => {
+    const { value } = event.target;
+    setWalletHash(value);
+  };
+
+  // Function to save wallet hash to the user and add it to the array
+  const saveWalletHash = () => {
+    setGitUserData({ ...gitUserData, walletHash });
+    setWalletHashes([...walletHashes, walletHash]);
+    setWalletHash(""); // Clear the input field after saving
+  };
+
   return (
     <div className="user-profile-main-cont">
-      <h2 className="profile-heading">YOUR PROFILE</h2>
+      <h2 className="profile-heading">Username/Account Address</h2>
       <div className="top-cont">
         {gitUserData.avatar_url && (
           <img
@@ -37,8 +60,20 @@ const AuthProfile = ({ username }) => {
           <h2 className="name">{gitUserData.name}</h2>
           <div className="user-details">
             <span className="user-detail">
-              <strong>Company:</strong>{" "}
-              {gitUserData.company || "Not available"}
+              <strong>Wallet Hash:</strong>{" "}
+              {gitUserData.walletHash ? (
+                <span>{gitUserData.walletHash}</span>
+              ) : (
+                <input
+                  type="text"
+                  value={walletHash}
+                  onChange={handleWalletHashChange}
+                  placeholder="Enter Wallet Hash"
+                />
+              )}
+              {!gitUserData.walletHash && (
+                <button onClick={saveWalletHash}>Save</button>
+              )}
             </span>
             <span className="user-detail">
               <strong>Public Repos:</strong> {gitUserData.public_repos}
@@ -47,10 +82,10 @@ const AuthProfile = ({ username }) => {
           <h3 className="location">{gitUserData.location}</h3>
           <div className="follow-cont">
             <span className="followers">
-              <strong>Followers:</strong> {gitUserData.followers}
+              <strong>Total Rating:</strong> {totalRating}
             </span>
             <span className="following">
-              <strong>Following:</strong> {gitUserData.following}
+              <strong></strong> {gitUserData.following}
             </span>
           </div>
           <a
